@@ -9,7 +9,7 @@ import type {
 } from '@clerk/types'
 import type { HeadlessBrowserClerk, BrowserClerk } from './types.js'
 import { getContext, setContext } from 'svelte'
-import type { Readable, Writable } from 'svelte/store'
+import { writable, type Readable, type Writable } from 'svelte/store'
 
 const _contextKey = '$$_clerk'
 
@@ -45,3 +45,5 @@ export const useClerkContext = (): ClerkContext => {
 export const setClerkContext = (context: ClerkContext): void => {
 	setContext(_contextKey, context)
 }
+
+export const user = writable(null)
