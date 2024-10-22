@@ -14,6 +14,7 @@ import type { ClientResource, InitialState, Resources, Without } from '@clerk/ty
 import type { BrowserClerk, HeadlessBrowserClerk } from './types.js'
 import { deriveState } from '@clerk/shared/deriveState'
 import { setClerkContext } from './context.js'
+import { sharedAuth } from '$lib/shared/store.js'
 
 type $$Props = Without<LoadClerkJsScriptOptions, 'routerPush' | 'routerReplace'> & {
   initialState?: InitialState
@@ -33,6 +34,7 @@ const auth = derived(
 		return deriveState($isLoaded, $resources, $$props.initialState)
 	}
 )
+$: $sharedAuth = $auth as any;
 const client = derived(resources, ($v) => $v.client)
 const session = derived(auth, ($v) => $v.session)
 const user = derived(auth, ($v) => $v.user)

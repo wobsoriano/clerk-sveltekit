@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { useClerkContext } from '$lib/client'
+	import { sharedAuth } from '$lib/shared/store.js'
 
 	const { user } = useClerkContext();
 
@@ -16,6 +17,11 @@
 <p>
 	<em data-testid="server-secret">{data.secret}</em>
 </p>
+
+<p>
+	<em>From Client: {$sharedAuth.userId}</em>
+</p>
+
 <p>You can also view <a href="/admin/profile">your profile</a>.</p>
 
 <style>

@@ -11,6 +11,8 @@ import {
 import type { AuthObject } from '@clerk/backend'
 import type { CookieSerializeOptions } from 'cookie'
 import { parse } from 'set-cookie-parser'
+import { sharedAuth } from '$lib/shared/store.js'
+import type { InitialState } from '@clerk/types'
 
 export type ClerkSvelteKitMiddlewareOptions = AuthenticateRequestOptions & { debug?: boolean }
 
@@ -43,6 +45,10 @@ export default function withClerkHandler(middlewareOptions?: ClerkSvelteKitMiddl
 
 		const authObject = requestState.toAuth()
 		event.locals.auth = authObject
+		sharedAuth.set(
+			makeAuthObjectSerializable(stripPrivateDataFromObject(authObject)) as unknown as InitialState
+		)
+
 		if (debug) {
 			console.log('[Clerk SvelteKit] ' + JSON.stringify(authObject))
 		}
